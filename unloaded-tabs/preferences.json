@@ -1,9 +1,0 @@
-[
-    {
-        "label": "Opacity (0-100)",
-        "defaultValue": "50",
-        "placeholder": "50",
-        "property": "mod.unloaded_tabs.opacity",
-        "type": "number"
-    }
-]
