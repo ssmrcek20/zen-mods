@@ -1,2 +1,3 @@
-# zen-modes
-My modes for Zen browser
+# zen-mods
+
+My mods for Zen browser
