@@ -5,33 +5,36 @@
 @-moz-document url-prefix("chrome:") {
  
   #ctrlTab-panel {
-    /* strip all default panel chrome */
     --panel-background: none !important;
     --panel-shadow: none !important;
     --panel-border-color: transparent !important;
     --panel-shadow-margin: 0 !important;
-    --panel-color: rgba(255, 255, 255, 0.88) !important;
+    --panel-color: rgba(255, 255, 255, 0.90) !important;
     --panel-border-radius: 24px !important;
     --panel-padding: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     background-color: unset !important;
+    overflow: visible !important;
  
     #ctrlTab-previews {
       margin: 0 auto !important;
-      padding: 20px !important;
+      padding: 20px 20px 15px 20px !important;
  
-      /* ── glass background ── */
-      background: rgba(26, 26, 30, 0.70) !important;
-      backdrop-filter: blur(28px) saturate(160%) !important;
-      -moz-backdrop-filter: blur(28px) saturate(160%) !important;
+      /* ── darker glass ── */
+      background: rgba(14, 14, 18, 0.78) !important;
+      backdrop-filter: blur(40px) saturate(140%) brightness(0.9) !important;
+      -moz-backdrop-filter: blur(40px) saturate(140%) brightness(0.9) !important;
  
       border-radius: 24px !important;
-      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+ 
+      /* ── uniform shadow on all 4 sides ── */
       box-shadow:
-        0 2px 0 rgba(255, 255, 255, 0.06) inset,   /* top highlight */
-        0 12px 48px rgba(0, 0, 0, 0.55),             /* deep shadow */
-        0 2px 10px rgba(0, 0, 0, 0.30) !important;   /* close shadow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 0 60px 10px rgba(0, 0, 0, 0.55),
+        0 0 20px 2px rgba(0, 0, 0, 0.35) !important;
  
       /* ── each tab tile ── */
       .ctrlTab-preview {
@@ -39,12 +42,16 @@
         padding: 0 !important;
         border-radius: 16px !important;
         outline: none !important;
+        position: relative !important;
  
-        /* inner wrapper — holds canvas + label row */
+        /* scale animation base state */
+        transform: scale(1) !important;
+        transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1) !important;
+        transform-origin: center center !important;
+ 
         .ctrlTab-preview-inner {
           position: relative !important;
           margin: 0 !important;
-          /* bottom padding creates the label zone height */
           padding: 8px 8px 34px 8px !important;
           border-radius: 16px !important;
           border: none !important;
@@ -52,11 +59,11 @@
           outline: none !important;
         }
  
-        /* ── tab screenshot ── */
+        /* ── screenshot ── */
         .ctrlTab-canvas {
           display: block !important;
           margin: 0 !important;
-          margin-bottom: 0 !important;
+          transition: box-shadow 0.18s ease !important;
         }
  
         .ctrlTab-canvas,
@@ -68,7 +75,7 @@
           display: block !important;
         }
  
-        /* ── favicon: sits to the left of the label text ── */
+        /* ── favicon: bottom-left, left of label text ── */
         .ctrlTab-favicon-container {
           image {
             position: absolute !important;
@@ -81,22 +88,23 @@
             box-shadow: none !important;
             background: transparent !important;
             border-radius: 3px !important;
+            z-index: 1 !important;
           }
         }
  
-        /* ── label: offset right so favicon has room ── */
+        /* ── label: starts after favicon ── */
         .ctrlTab-label {
           position: absolute !important;
           bottom: 9px !important;
-          left: 28px !important;   /* 10px left pad + 14px icon + 4px gap */
+          left: 28px !important;
           right: 8px !important;
  
           font-size: 12px !important;
           font-family: inherit !important;
           font-weight: 500 !important;
-          color: rgba(255, 255, 255, 0.88) !important;
+          color: rgba(255, 255, 255, 0.85) !important;
           letter-spacing: 0.01em !important;
-          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
  
           white-space: nowrap !important;
           overflow: hidden !important;
@@ -105,9 +113,10 @@
           padding: 0 !important;
         }
  
-        /* ── focused state: blue glow on canvas only, no border on text zone ── */
+        /* ── focused: scale up + soft blue glow on canvas only ── */
         &:focus {
           outline: none !important;
+          transform: scale(1.06) !important;
  
           .ctrlTab-preview-inner {
             background: transparent !important;
@@ -115,12 +124,10 @@
             outline: none !important;
           }
  
-          /* glow lives on the canvas wrapper */
           .ctrlTab-canvas {
-            border-radius: 10px !important;
             box-shadow:
-              0 0 0 2px rgba(66, 133, 255, 0.95),
-              0 0 18px rgba(66, 133, 255, 0.50) !important;
+              0 0 0 2px rgba(66, 133, 255, 0.75),
+              0 0 14px 2px rgba(66, 133, 255, 0.28) !important;
           }
         }
       }
