@@ -1,5 +1,5 @@
-# Unloaded Tabs
+# Arc CtrlTab Panel
 
-Zen Browser mod that lowers opacity of unloaded/inactive tabs and folders.
+Zen Browser mod that changes look of CtrlTab panel to look more modern more like Arc.
 
-I tested how zen mods worked so I just made this based on [Seismix Ghost Tabs](https://github.com/Seismix/zen-ghost-tabs/), install that mode its better than mine.
+Requires active setting "Ctrl+Tab cycles though tabs"
