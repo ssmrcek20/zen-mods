@@ -1,6 +1,8 @@
+/**
+ * Zen Mod: Arc-style CtrlTab Panel
+ */
 @-moz-document url-prefix("chrome:") {
- 
-  /* ── panel OS window ── */
+
   #ctrlTab-panel {
     --panel-background: transparent !important;
     --panel-shadow: none !important;
@@ -8,36 +10,21 @@
     --panel-color: rgba(255, 255, 255, 0.90) !important;
     --panel-border-radius: 0 !important;
     --panel-padding: 0 !important;
-    /* 40px gives room for box-shadow to bleed out on all 4 sides */
-    --panel-shadow-margin: 40px !important;
+    --panel-shadow-margin: 0 !important;
     -moz-appearance: none !important;
     background: transparent !important;
-    overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
   }
- 
-  /* ── glass panel ── */
+
   #ctrlTab-previews {
-    overflow: visible !important;
     margin: 0 auto !important;
     padding: 20px 20px 15px 20px !important;
- 
-    /* dark tinted glass — no real blur possible in popup windows */
     background: rgba(16, 16, 20, 0.90) !important;
- 
     border-radius: 24px !important;
     border: 1px solid rgba(255, 255, 255, 0.10) !important;
- 
-    /* uniform shadow — now has 40px of room on all sides */
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),   /* top edge highlight */
-      0 0 0 1px rgba(0, 0, 0, 0.55),              /* tight dark ring */
-      0 0 35px 6px rgba(0, 0, 0, 0.60),           /* big ambient shadow */
-      0 0 12px 2px rgba(0, 0, 0, 0.45) !important; /* close shadow */
   }
- 
-  /* ── each tab tile (button) ── */
+
   .ctrlTab-preview {
     -moz-appearance: none !important;
     background: transparent !important;
@@ -47,22 +34,17 @@
     padding: 0 !important;
     border-radius: 16px !important;
     min-width: 0 !important;
- 
-    transform: scale(1) !important;
-    transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1) !important;
+    transition: transform 0.18s cubic-bezier(0.34, 1, 0.64, 1) !important;
     transform-origin: center center !important;
   }
- 
-  /* hide the default XUL button-box — it overlaps the preview content */
+
   .ctrlTab-preview > .button-box {
     display: none !important;
   }
- 
-  /* ── inner vbox: position anchor for favicon + label ── */
+
   .ctrlTab-preview-inner {
     position: relative !important;
     margin: 0 !important;
-    /* bottom 32px = reserved zone for favicon + label row */
     padding: 8px 8px 32px 8px !important;
     border-radius: 16px !important;
     border: none !important;
@@ -70,37 +52,34 @@
     outline: none !important;
     flex: 1 !important;
   }
- 
-  /* ── tab screenshot hbox ── */
+
   .ctrlTab-canvas {
     border-radius: 10px !important;
-    width: 210px !important;
-    height: 138px !important;
+    width: 225px !important;
+    height: 148px !important;
     overflow: hidden !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
-    transition: box-shadow 0.15s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
   }
- 
-  /* screenshot canvas/img inside the hbox */
+
   .ctrlTab-canvas > canvas,
   .ctrlTab-canvas > img {
-    border-radius: 10px !important;
-    width: 210px !important;
-    height: 138px !important;
+    width: 225px !important;
+    height: 148px !important;
   }
- 
-  /* ── favicon: absolutely placed left of label text ── */
+
   .ctrlTab-favicon-container {
     position: absolute !important;
     bottom: 9px !important;
-    left: 0px !important;
+    left: 10px !important;
     width: 14px !important;
     height: 14px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
- 
+
   image.ctrlTab-favicon {
     width: 14px !important;
     height: 14px !important;
@@ -110,45 +89,33 @@
     box-shadow: none !important;
     background: transparent !important;
   }
- 
-  /* ── label: offset right to leave room for 14px favicon + 4px gap ── */
+
   label.ctrlTab-label {
     position: absolute !important;
     bottom: 9px !important;
-    left: 18px !important;  /* 0 + 14px favicon + 4px gap */
+    left: 30px !important;
     right: 8px !important;
- 
     font-size: 12px !important;
     font-family: inherit !important;
     font-weight: 500 !important;
     color: rgba(255, 255, 255, 0.85) !important;
     letter-spacing: 0.01em !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
- 
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     margin: 0 !important;
     padding: 0 !important;
   }
- 
-  /* ── focused tile: scale up, blue glow on canvas only ── */
+
   .ctrlTab-preview:focus {
     outline: none !important;
     transform: scale(1.06) !important;
   }
- 
-  .ctrlTab-preview:focus > .ctrlTab-preview-inner {
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-  }
- 
-  /* glow lives only on the screenshot — does NOT wrap the text zone */
+
   .ctrlTab-preview:focus .ctrlTab-canvas {
-    box-shadow:
-      0 0 0 2px rgba(66, 133, 255, 0.70),
-      0 0 14px 3px rgba(66, 133, 255, 0.25) !important;
+    border: 2px solid rgba(66, 133, 255, 0.70) !important;
+    box-shadow: 0 0 14px 3px rgba(66, 133, 255, 0.25) !important;
   }
- 
+
 }
